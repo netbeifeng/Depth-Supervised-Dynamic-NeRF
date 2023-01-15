@@ -3,11 +3,11 @@
 ADL4CV project WS 22/23. For more details, check report [here](./docs/Depth_Supervised_Dyanamic_NeRF.pdf).
 
 ## Overview
-Based on [D-NeRF implementation](), our method attempts to improve Non-Rigid NeRF methods by additionally supervising a depth term, with a dense input of depth frame, which could make the depth supervision more accurate and make the problem well-constrained. 
+Based on [D-NeRF implementation](https://github.com/albertpumarola/D-NeRF), our method attempts to improve Non-Rigid NeRF methods by additionally supervising a depth term, with a dense input of depth frame, which could make the depth supervision more accurate and make the problem well-constrained. 
 
 ![Overview](./imgs/Pipeline_DSDNeRF.png)
 
-Starting with an RGBD-Dataset, which is composed of RGB images ${C_i}^{N-1}_{i=0}$, $C_i\in[0,1]^{H\times W\times 3}$ and Depth images ${D_i}^{N-1}_{i=0}$, $D_i \in[t_n, t_f]^{H\times W\times 1}$, where $t_n$ and $t_f$ describes the near and far plane distance of the whole scene.
+Starting with an RGBD-Dataset, which is composed of RGB images $ {C_i} ^ {N-1}_{i=0} $, $ C_i \in[0,1] ^ {H\times W\times 3}$ and Depth images $ {D_i} ^ {N-1}_{i=0} $, $ D_i \in[t_n, t_f] ^ {H\times W\times 1} $, where $t_n$ and $t_f$ describes the near and far plane distance of the whole scene.
 Since the scene is the non-static scene, the time steps ${T_i}^{N-1}_{i=0}$, $T_i\in [0,1]$ and the camera pose ${P_i} \in SE(3)$ at the respective time step.
 ## Setup
 
