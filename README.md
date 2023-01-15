@@ -3,7 +3,7 @@
 ADL4CV project WS 22/23. For more details, check report [here](./docs/Depth_Supervised_Dyanamic_NeRF.pdf).
 
 ## Overview
-Based on [D-NeRF implementation](https://github.com/albertpumarola/D-NeRF), our method attempts to improve Non-Rigid NeRF methods by additionally supervising a depth term, with a dense input of depth frame, which could make the depth supervision more accurate and make the problem well-constrained. 
+Based on [D-NeRF implementation](https://github.com/albertpumarola/D-NeRF) and [Dense Depth Priors for NeRF from Sparse Input Views](https://github.com/barbararoessle/dense_depth_priors_nerf), our method attempts to improve Non-Rigid NeRF methods by additionally supervising a depth term, with a dense input of depth frame, which could make the depth supervision more accurate and make the problem well-constrained. 
 
 ![Overview](./imgs/Pipeline_DSDNeRF.png)
 
