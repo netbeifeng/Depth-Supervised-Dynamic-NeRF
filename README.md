@@ -7,8 +7,9 @@ Based on [D-NeRF implementation](https://github.com/albertpumarola/D-NeRF), our 
 
 ![Overview](./imgs/Pipeline_DSDNeRF.png)
 
-Starting with an RGBD-Dataset, which is composed of RGB images $ {C_i} ^ {N-1}_{i=0} $, $ C_i \in[0,1] ^ {H\times W\times 3}$ and Depth images $ {D_i} ^ {N-1}_{i=0} $, $ D_i \in[t_n, t_f] ^ {H\times W\times 1} $, where $t_n$ and $t_f$ describes the near and far plane distance of the whole scene.
-Since the scene is the non-static scene, the time steps ${T_i}^{N-1}_{i=0}$, $T_i\in [0,1]$ and the camera pose ${P_i} \in SE(3)$ at the respective time step.
+Starting with an RGBD-Dataset, which is composed of RGB images $C_i\in[0,1]^{H\times W\times 3}$ and Depth images $D_i\in[t_n, t_f]^{H\times W\times1}$, where $t_n$ and $t_f$ describes the near and far plane distance of the whole scene.
+Since the scene is the non-static scene, the time steps $T_i\in [0,1]$ and the camera pose ${P_i} \in SE(3)$ at the respective time step.
+
 ## Setup
 
 0. `git clone https://github.com/netbeifeng/Depth-Supervised-Dynamic-NeRF.git`
