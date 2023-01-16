@@ -10,7 +10,7 @@ import numpy as np
 from config import config_parser
 from model.nerf import create_nerf
 
-from load_torf import load_dino_data
+from load_dino import load_dino_data
 from load_toss import load_toss_data
 try:
     from apex import amp
@@ -98,6 +98,23 @@ def train(args):
     render_kwargs_train.update(bds_dict)
     render_kwargs_test.update(bds_dict)
 
+    if args.generate:
+        print("GENERATE")
+        testsavedir = os.path.join(basedir, expname, 'generate_{}'.format(start))
+        os.makedirs(testsavedir, exist_ok=True)
+        
+        test_poses = torch.Tensor(np.array(poses)).to(device)
+        test_times = torch.Tensor(np.array(times)).to(device)
+         
+        rgbs, _, depths = render_path(test_poses, test_times, hwf, args.chunk, render_kwargs_test, gt_imgs=images, gt_depths=depths,
+                                savedir=testsavedir, render_factor=args.render_factor, save_also_gt=True)
+        
+        # Save RGB and depth as numpy arrays
+        np.save(os.path.join(testsavedir, 'rgb.npy'), rgbs.cpu().numpy())
+        np.save(os.path.join(testsavedir, 'depth.npy'), depths.cpu().numpy())
+        
+        return
+    
     # Short circuit if only rendering out from trained model
     if args.render_only and args.render_test: # Test Metrics !!!
         print('RENDER ONLY')
@@ -110,11 +127,18 @@ def train(args):
             test_poses = torch.Tensor(np.array(poses)[i_test]).to(device)
             test_times = torch.Tensor(np.array(times)[i_test]).to(device)
             
-            rgbs, _, depths = render_path(test_poses, test_times, hwf, args.chunk, render_kwargs_test, gt_imgs=images[i_test], gt_depths=depths[i_test],
+            rgbs, _, _depths = render_path(test_poses, test_times, hwf, args.chunk, render_kwargs_test, gt_imgs=images[i_test], gt_depths=depths[i_test],
                                   savedir=testsavedir, render_factor=args.render_factor, save_also_gt=True)
             print('Done rendering', testsavedir)
+            np.save(os.path.join(testsavedir, 'rgb.npy'), rgbs)
+            np.save(os.path.join(testsavedir, 'depth.npy'), _depths)
+            # save GT
+            np.save(os.path.join(testsavedir, 'rgb_gt.npy'), images[i_test])
+            np.save(os.path.join(testsavedir, 'depth_gt.npy'), depths[i_test])
+             
+            
             imageio.mimwrite(os.path.join(testsavedir, 'video.mp4'), to8b(rgbs), fps=10, quality=8)
-            imageio.mimwrite(os.path.join(testsavedir, 'depths.mp4'), to8b(depths/np.max(depths)), fps=10, quality=8)
+            imageio.mimwrite(os.path.join(testsavedir, 'depths.mp4'), to8b(_depths/np.max(_depths)), fps=10, quality=8)
             return
 
     if args.render_spherical_pose:

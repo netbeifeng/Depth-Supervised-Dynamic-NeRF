@@ -123,4 +123,8 @@ def config_parser():
                         help='frequency of render_poses video saving')
     parser.add_argument("--i_time",    type=float, default=(47/122),
                         help='default time for rendering')
+    
+    # Generate 
+    parser.add_argument("--generate", action='store_true',
+                        help='generate data')
     return parser
